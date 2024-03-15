@@ -185,6 +185,8 @@ class Game:
                 print("You have run out of credits. Game over.")
                 break
             play_again = input("Do you want to play again? (y/n): ")
+            while play_again != 'y' and play_again != 'n':
+                play_again = input("Do you want to play again? (y/n): ")
             if play_again.lower() == 'y':
                 for card in self.player.hand:
                     self.deck.cards.append(card)
