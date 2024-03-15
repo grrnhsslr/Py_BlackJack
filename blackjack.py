@@ -108,8 +108,8 @@ class Player:
 class Game:
     def __init__(self):
         self.deck = Deck()  # Initialize the deck
-        self.player = Player("Player", 100)  # Initialize the player with a balance of 100 credits
-        self.dealer = Player("Dealer", float('inf'))  # Dealer has infinite credits
+        self.player = Player("Player", float(100.00))  # Initialize the player with a balance of 100 credits
+        self.dealer = Player("Dealer", 999999999999)  # Dealer has infinite credits
 
     def deal_initial_cards(self):
         # Deal initial cards to the player and the dealer
@@ -121,13 +121,13 @@ class Game:
     def player_turn(self):
         # Player's turn to play
         while True:
-            print("\nPlayer's Hand:")
+            print('=' * 50, "\nPlayer's Hand:")
             for card in self.player.hand:
                 print(card)
             total = self.player.calculate_total()
             print(f"Total: {total}")
             if total == 21:
-                print("Blackjack!")
+                print("Blackjack!\n", '=' * 50)
                 break
             elif total > 21:
                 print("Busted! You lose.")
@@ -145,7 +145,7 @@ class Game:
         while self.dealer.calculate_total() < 17:
             self.dealer.add_card(self.deck.deal())
         time.sleep(1)
-        print("\nDealer's Hand:")
+        print('=' * 50, "\nDealer's Hand:")
         for card in self.dealer.hand:
             print(card)
         total = self.dealer.calculate_total()
@@ -185,8 +185,15 @@ class Game:
                 print("You have run out of credits. Game over.")
                 break
             play_again = input("Do you want to play again? (y/n): ")
-            if play_again.lower() != 'y':
-                print("Thanks for playing!")
+            if play_again.lower() == 'y':
+                for card in self.player.hand:
+                    self.deck.cards.append(card)
+                for card in self.dealer.hand:
+                    self.deck.cards.append(card)
+                self.player.hand = []
+                self.dealer.hand = []
+            elif play_again.lower() == 'n':
+                print("Thanks for playing! Goodbye!")
                 break
 
 
